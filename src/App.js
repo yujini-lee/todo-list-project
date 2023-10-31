@@ -3,7 +3,7 @@ import InputBox from "./components/InputBox";
 import List from "./components/List";
 
 function App() {
-  const [task, setTask] = useState([{id:0, text: "yyy", status: "pending", isDone: false, }]);
+  const [task, setTask] = useState(initTask);
 
   const addTask = (value) => {
     setTask([...task, value]);
@@ -17,8 +17,8 @@ function App() {
     setTask((todolist) => todolist.map((todo) => todo.id === id ? {...todo, isDone: !todo.isDone} : todo));
   }
 
-  const hadleEdit = () => {
-
+  const hadleEdit = (id, text) => {
+    setTask((todolist) => todolist.map((todo) => todo.id === id ? {...todo, text} : todo));
   }
   return (
     <>
@@ -39,7 +39,9 @@ function App() {
                 </tr>
             </thead>
             <tbody className="todos-list-body">
-              <List todo={task} deletedTask={deletedTask} handleUpdate={handleUpdate} hadleEdit={hadleEdit}/>
+              {
+                 <List todo={task} deletedTask={deletedTask} handleUpdate={handleUpdate} handleEdit={hadleEdit}/>
+              }
             </tbody>
         </table>
 
@@ -65,5 +67,6 @@ function App() {
     </>
   );
 }
-
+const initTask = [
+]
 export default App;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import uuid from "react-uuid";
 
 function InputBox({addTask}) {
   const [todo, setTodo] = useState('');
@@ -9,7 +10,7 @@ function InputBox({addTask}) {
   }
   const handleSubmit = (e) =>{
     e.preventDefault();
-    addTask({id:1, text: todo, status: 'pending'});
+    addTask({id:uuid(), text: todo, status: 'pending'});
     setTodo('');
   }
   return (
