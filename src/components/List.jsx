@@ -1,4 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil, faCheck, faTrash, faFilePen } from "@fortawesome/free-solid-svg-icons";
 
 function List({ todo, deletedTask, handleUpdate, handleEdit }) {
   const [editIndex, setEditIndex] = useState();
@@ -34,13 +36,13 @@ function List({ todo, deletedTask, handleUpdate, handleEdit }) {
           </td>
         </tr>
       ) : (
-        todo.map((x) => (
+        todo.map((x, idx) => (
           <tr className="todo-item" key={x.id}>
-            {editIndex === x.id ? (
+            {editIndex === idx ? (
               <td>
                 <input
                   type="text"
-                  value={text || ""} // value값이 undefinde가 들어가 있으면 warning이 발생
+                  value={text || x.text} 
                   onChange={toggleChange}
                   ref={inputRef}
                 />
@@ -50,36 +52,32 @@ function List({ todo, deletedTask, handleUpdate, handleEdit }) {
             )}
             <td>{x.isDone ? "complete" : "pending"}</td>
             <td>
-              {editIndex === x.id ? (
+              {editIndex === idx ? (
                 <button
                   className="btn btn-success btn-sm"
                   onClick={() => saveEdit(x.id)}
                 >
-                  수정
-                  <i className="bx bx-check bx-xs"></i>
+                  <FontAwesomeIcon icon={faFilePen} />
                 </button>
               ) : (
                 <button
                   className="btn btn-warning btn-sm"
-                  onClick={() => edit(x.id)}
+                  onClick={() => edit(idx)}
                 >
-                  수정하는버튼
-                  <i className="bx bx-edit-alt bx-bx-xs"></i>
+                  <FontAwesomeIcon icon={faPencil} />
                 </button>
               )}
               <button
                 className="btn btn-success btn-sm"
                 onClick={() => handleUpdate(x.id)}
               >
-                완성버튼
-                <i className="bx bx-check bx-xs"></i>
+                <FontAwesomeIcon icon={faCheck} />
               </button>
               <button
                 className="btn btn-error btn-sm"
                 onClick={() => deletedTask(x.text)}
               >
-                삭제버튼
-                <i className="bx bx-trash bx-xs"></i>
+                <FontAwesomeIcon icon={faTrash} />
               </button>
             </td>
           </tr>

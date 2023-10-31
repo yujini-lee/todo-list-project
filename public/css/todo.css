@@ -1,5 +1,14 @@
 
-
+.table{table-layout: fixed;}
+.table th, .table td{text-align: center;}
+.table td{
+  overflow: hidden;
+  white-space: initial;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}
+.btn-success{margin: 0 15px;}
 .container {
   display: flex;
   align-items: center;
