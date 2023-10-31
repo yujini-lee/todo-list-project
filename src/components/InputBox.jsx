@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import uuid from "react-uuid";
 import styles from '../InputBox.module.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 function InputBox({addTask}) {
   const [todo, setTodo] = useState('');
+  const todoRef = useRef();
 
   const handleChange = (e) =>{
     const {value} = e.target;
@@ -12,6 +13,11 @@ function InputBox({addTask}) {
   }
   const handleSubmit = (e) =>{
     e.preventDefault();
+    if(!todo){
+      alert('내용을 입력하세요');
+      todoRef.current.focus();
+      return;
+    }
     addTask({id:uuid(), text: todo, status: 'pending', isDone:false});
     setTodo('');
   }
@@ -25,6 +31,7 @@ function InputBox({addTask}) {
             className="input input-bordered input-secondary w-full max-w-xs"
             value={todo}
             onChange={handleChange}
+            ref={todoRef}
           />
           {/* <input
             type="date"

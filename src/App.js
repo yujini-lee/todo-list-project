@@ -1,48 +1,46 @@
-import { useContext, useState } from "react";
+import { useContext, useReducer } from "react";
 import InputBox from "./components/InputBox";
 import List from "./components/List";
-import { DarkModeContext, DarkModeProvider } from "./context/DarkModeContext";
+import { DarkModeContext } from "./context/DarkModeContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import todoReducer from "./reducer/todoReducer";
 
 function App() {
-  const [task, setTask] = useState([]);
+  const [task, dispatch] = useReducer(todoReducer, initTodo);
 
   const addTask = (value) => {
-    setTask([...task, value]);
+    dispatch({type:'ADD', value});
   };
 
-  const deletedTask = (e) => {
-    setTask((prev) => prev.filter((x) => x.text !== e));
+  const deletedTask = (todolist) => {
+    dispatch({type:'DELETE', todolist})
   };
 
   const handleUpdate = (id) => {
-    setTask((todolist) =>
-      todolist.map((todo) =>
-        todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
-      )
-    );
+    dispatch({type:'UPDATE', id})
   };
 
   const hadleEdit = (id, text) => {
-    setTask((todolist) =>
-      todolist.map((todo) => (todo.id === id ? { ...todo, text } : todo))
-    );
+    dispatch({type:'EDIT', id, text});
   };
   const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+  const toggleClass = darkMode ? "dark" : "light";
   return (
     <>
+      <div className={`wrap ${toggleClass}`}>
+        {/* 다크모드 */}
         <div className="theme-switcher">
-        <p>
-        DarkMode:
-        {darkMode ? (
-          <span style={{ backgroundColor: 'black', color: 'white' }}>
-            Dark Mode
-          </span>
-        ) : (
-          <span>Light Mode</span>
-        )}
-      </p>
-      <button onClick={() => toggleDarkMode()}>Toggle</button>
+          <p>
+            {darkMode ? (
+              <FontAwesomeIcon icon={faMoon} onClick={() => toggleDarkMode()} className="moonIcon"/>
+            ) : (
+              <FontAwesomeIcon icon={faSun} onClick={() => toggleDarkMode()} className="sunIcon"/>
+            )}
+          </p>
         </div>
+
+        {/* 투두리스트 */}
         <div className="container">
           <header>
             <h1>TODO LIST</h1>
@@ -69,6 +67,7 @@ function App() {
             </tbody>
           </table>
         </div>
+
         {/* 카피라이터 */}
         <div className="author-text">
           <p>
@@ -82,8 +81,10 @@ function App() {
             </a>
           </p>
         </div>
+      </div>
     </>
   );
 }
+const initTodo = [{id:'1', text:'화이팅', isDone:false}];
 
 export default App;

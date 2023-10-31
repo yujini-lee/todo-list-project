@@ -54,7 +54,7 @@ function List({ todo, deletedTask, handleUpdate, handleEdit }) {
             <td>
               {editIndex === idx ? (
                 <button
-                  className="btn btn-success btn-sm"
+                  className="btn btn-warning btn-sm"
                   onClick={() => saveEdit(x.id)}
                 >
                   <FontAwesomeIcon icon={faFilePen} />
