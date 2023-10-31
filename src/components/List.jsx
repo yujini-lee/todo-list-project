@@ -24,7 +24,7 @@ function List({ todo, deletedTask, handleUpdate, handleEdit }) {
 
   const saveEdit = (idx) => {
     setEditIndex();
-    handleEdit(idx, text); // Pass the updated text to handleEdit
+    handleEdit(idx, text);
   };
 
   return (
