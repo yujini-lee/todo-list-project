@@ -42,7 +42,7 @@ function List({ todo, deletedTask, handleUpdate, handleEdit }) {
               <td>
                 <input
                   type="text"
-                  value={text || x.text} 
+                  value={text || ''} 
                   onChange={toggleChange}
                   ref={inputRef}
                 />
